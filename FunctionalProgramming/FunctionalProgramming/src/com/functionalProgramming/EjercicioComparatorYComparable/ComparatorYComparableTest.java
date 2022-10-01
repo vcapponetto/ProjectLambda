@@ -20,7 +20,7 @@ public class ComparatorYComparableTest {
         System.out.println(nombres);
 
         //--Para poder usar el mét. compareTo de Comparable en una Collections
-        //--la clase tiene que sobre escribir el método e implementar de interfaz Comparable
+        //--la clase tiene que sobrescribir el método e implementar de interfaz Comparable
         List<Persona> personas = asList(
                 new Persona(3,"Laura", 24),
                 new Persona(2,"Paola", 28),
