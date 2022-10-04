@@ -1,0 +1,277 @@
+¿Qué es una expresión lambda?
+
+Una expresión lambda es esencialmente una función sin nombre, que tiene un cuerpo de función y puede o no recibir parámetros.
+
+En Java, una expresión lambda siempre va a representar el método abstracto de una interfaz funcional.
+
+La expresión lambda va a separar su lista de parámetros de su cuerpo de función por medio del operador flecha ->
+
+Una expresión lambda luce así.
+
+(argumentos) -> 
+{
+    //cuerpo de la expresión lambda
+}
+
+¿Qué es una interfaz funcional?
+
+Antes de hablar de las interfaces funcionales, comentaré brevemente las novedades en las interfaces en general que la versión 8 de Java ha implementado.
+
+*La primera y mas impresionante característica es que ahora las interfaces permiten tener una implementación por defecto para sus métodos. Si un método de una interfaz tiene alguna implementación, es necesario declarar ese método como default. La idea es que todas las clases que implementen esta interfaz tengan cierta funcionalidad "por defecto" en los métodos de sus interfaces.
+
+*Una interfaz puede tener cualquier cantidad de métodos implementados siempre y cuando sean declarados como default.
+
+public interface Iterable<T> {
+    Iterator<T> iterator();
+    
+    default void forEach(Consumer<? super T> action) {
+        Objects.requireNonNull(action);
+        for (T t : this) {
+            action.accept(t);
+        }
+    }
+}
+
+*La otra característica es que las interfaces pueden tener métodos estáticos implementados.
+
+import java.util.List;
+ 
+public interface Producto {
+ 
+    public int getPrecio();
+     
+    public static int importeTotal(List<Producto> listaProductos) {
+         
+        return listaProductos.stream().mapToInt((p)->p.getPrecio()).sum();
+    }
+}
+
+*En cuanto a los métodos abstractos, no hay cambios; las interfaces pueden tener cualquier cantidad de métodos abstractos "en sus filas".
+
+Entonces, ¿Qué es una interfaz funcional?
+
+Las interfaces funcionales se utilizan principalmente para permitir el paso de funciones a métodos. Esto es, que podemos pasar una implementación de una función como argumento de un método.
+
+En el fondo, seguiremos pasando un objeto a dicho método, pero la idea de la interfaz funcional (y de la programación funcional en sí) es trabajar con funciones mas que con objetos. La interfaz funcional nos va a permitir simular que pasamos una función implementada como argumento de un método, aunque no es su único uso.
+
+Cuando profundicemos más en las expresiones lambda, entenderemos mejor este concepto que a primera instancia puede ser confuso para los programadores que estamos acostumbrados a trabajar con objetos.
+
+*Para que una interfaz sea funcional debe cumplir con un solo requisito: Solo debe tener un método abstracto.
+
+*La interfaz funcional puede tener varios métodos estáticos y default si quiere, pero solo un método abstracto.
+
+Más adelante veremos que esta característica le permite acoplarse perfectamente con las expresiones lambda.
+
+Es posible para nosotros crear nuestras propias interfaces funcionales, sin embargo, la versión 8 de Java ha incluido una gran cantidad de estas interfaces dentro del paquete java.util.function 
+
+Ejemplo:
+Representa la implementación del método abstracto de una interfaz.
+
+SINTAXIS DE UNA EXPRESIÓN LAMBDA:
+parámetros -> cuerpo
+
+public interface Ficticia {
+	public void aceptar(); //método abstracto sin args
+	
+}
+Ej: de interface con mét abstracto con argumento.
+public interface Ficticia2 {
+	public void aceptar(int valor); //método abstracto con args
+	
+}
+
+- Para utilizar la interfaz normalmente habría que implementar el método abstracto en la instanciación:
+-- Mét.abstracto sin args:
+Ficticia f = new Ficticia(){
+	@Override
+	public void aceptar(){
+		System.println("Hola Mundo");
+	}
+}
+
+-- Mét.abstracto con args:
+Ficticia2 f = new Ficticia2(){
+	@Override
+	public void aceptar(int valor){
+		System.println("Hola Mundo:" + valor);
+	}
+}
+
+- Con lambdas sería:
+() sin parámetros porque es void
+Ficticia f = () -> {System.println("Hola Mundo");};
+con parámetros 
+Ficticia2 f = (int valor) -> {System.println("Hola Mundo" + "valor2);}; 
+
+o sin indicar el tipo de dato ya que se deja al compilador que lo infiera, ésto sucede porque el
+compilador entiende que es el método abstracto de la interfaz "Ficticia2" que está declarado con un
+argumento tipo int:
+Ficticia2 f = (valor) -> {System.println("Hola Mundo" + "valor");}; 
+
+- También se puede prescindir de los () si tiene sólo un arg:
+Ficticia2 f = valor -> {System.println("Hola Mundo" + "valor");}; 
+
+- Si tiene más de un arg hay que utilizar los ()
+Ficticia2 f = (valor1, valor2) -> {System.println("Hola Mundo" + "valor1" + "valor2");}; 
+
+- Si la expresión lambda tiene una sóla sentencia se puede prescindir de las {}
+Ej: 
+Ficticia f = () -> System.println("Hola Mundo");
+Ficticia2 f = (valor) -> System.println("Hola Mundo" + "valor");
+
+- Si la expresión lambda tiene más de una sentencia se usan la {} y se separan con ; las sentencias
+Ficticia f = () -> {
+ 	System.println("Hola Mundo");
+ 	System.println("Hello");
+ 	};
+- También si el método abstracto retorna un valor, se puede prescindir de la variable que retorna y devolver un resultado directamente 
+Ej:
+Ficticia2 f = (valor1, valor2) -> valor1/valor2; 
+
+INFERENCIA DEL TIPO DE INTERFAZ LAMBDA
+El compilador JAVA puede inferir la interfaz que se está utlizando y el método porque la interfaz tiene
+un único método abstracto, y la interfaz la infiere por el tipo de dato del método de MiClase.
+
+Ej:
+public interface Function {
+	public void accept(int entero, String cadena);
+}
+
+La expresión lambda sería
+Function f = (entero, cadena) -> System.println("parámetros: " + entero + cadena);
+
+- si uso el método de la clase que tiene por arg un objeto interfaz function sería:
+MiClase obj = new MiClase();
+
+obj.metodo((entero, cadena) -> System.println("parámetros: " + entero + cadena););
+o :
+obj.metodo(f);
+
+//Clase MiClase
+public class MiClase{
+	public void metodo(Function entero, cadena){
+		//Hace algo con los parámetros
+	}
+}
+
+-------------------------------------------------------------------------------------------------
+"RECORDATORIO --> UNA INTERFAZ LAMBDA REPRESENTA UN OBJETO CON UN METODO ABSTRACTO IMPLEMENTADO."
+-------------------------------------------------------------------------------------------------
+
+EJERCICIO EJEMPLO DE USO:
+
+
+public interface FunctionTest {
+	public void saludar();
+}
+
+public class LambdaTest (){
+	public static void main(String[] args){
+		FunctionTest ft = () -> System.out.println("Hola Mundo");
+		ft.saludar();  // se puede invocar y utlizar el método de ésta manera o ft como arg de otro método.
+	}
+}
+
+public class LambdaTest (){
+	public static void main(String[] args){
+		FunctionTest ft = () -> System.out.println("Hola Mundo");
+		
+		LambdaTest objeto = new LambdaTest();  // se puede invocar y utlizar ft como arg de otro método de la misma clase.
+		
+		objeto.miMetodo(ft);
+		objeto.miMetodo(()-> System.out.println("Otra implementación");
+		objeto.miMetodo(()-> System.out.println("Otra implementación distinta");
+	}
+	
+	public void miMetodo(FuntionTest parametro) {
+		parametro.saludar();
+	}
+}
+
+*************************
+* Métodos referenciados
+*************************
+Las expresiones lambdas se utilizan para reemplazar los métodos anónimos en el caso de las interfaces funcionales.
+Las expresiones Lambda
+Una expresión lambda es una forma de hacer referencia a métodos anónimos cuando hacemos referencias a clases anónimas. ¿Cómo te has quedado? Esta definición da lugar a mas preguntas que respuestas. ¿Qué son una clase anónima y un método anónimo?
+
+Una clase anónima es una clase sin un tipo concreto especificado, es decir, una clase que en tiempo de ejecución puede ser cualquier cosa que implemente una determinada interfaz.
+Un método anónimo es el mismo concepto que la clase anónima trasladada a los métodos: el método de una interfaz implementado a un tipo de objeto no especificado. Se llaman anónimas porque no se especifica el nombre del método en la expresión.
+
+Una expresión Lambda no hace otra cosa más que llamar a un método que ya existe, en ese caso sería más claro
+referirse al método que existe por su nombre, los métodos referenciados nos permiten realizar esto, estos 
+métodos son expresiones lambdas compactas, y fáciles de leer para los métodos que ya tienen un nombre.
+
+Ej. listaPersonas.forEach(System.out::println) = listaPersonas.forEach(persona -> Systema.out.println(persona))
+
+*****************************************************
+* Stream java 8 - Sección 5 - Introducción a Streams
+*****************************************************
+NO SE INDICA CÓMO HACER la operación SINO que se indica QUÉ HACER.
+
+ES LENGUAJE DECLARATIVO
+
+El uso de streams nos permite procesar datos de forma declarativa como si lo hiciéramos en lenguaje sql
+Los stream en conjunto con las expresiones lambdas y las interfaces funcionades nos permiten utilizar 
+todo el poder de la programación funcional.
+
+Las colecciones de java se enfocan en cómo almacenan colecciones de datos para un acceso eficiente, en cambio los
+streams se enfocan en operaciones de agregación sobre elementos de datos desde un origen de datos, lo streams nunca guardan información,
+sino que a partir de un origen de datos que puede ser una colección o algún otro tipo bajo demanda va procesando los datos
+y va realizando operaciones de agregación u otras.
+
+Características de Streams:
+-----------------------------
+1- Proveen una secuencia de elementos, obtiene y procesa bajo demanda una serie de elementos, nunca almacenan los datos
+2- Origen de datos a procesar, toma datos de colecciones, arrays, listas o archivos.
+3- Soportan operaciones de agregación, como filtrado, mapeado, límite, reducción, búsqueda etc.
+4- PipeLining o canalización de flujo, la majoría de las operaciones streams devuelven otro stream,
+cuyo resultado puede ser conducido a otro stream al mismo tiempo y así sucesivamente, estas operaciones son llmadas
+"OPERACIONES INTERMEDIAS" y su función es tomar un stream de entrada y producir un stream de salida. El 
+pipe lining de un stream siempre termina en una "OPERACIÓN TERMINAL", EJ el método COLLECT es una operación terminal que presenta
+al final del stream para indicar el final del stream.
+5-Las operaciones con stream internamente realizan iteración automática a través de los datos de entrada provistos.
+
+Paquete java.util.stream
+Hereda de la interface BaseStream
+Hay streams DobleStream, LongStream, con funciones específicas para trabajar con números y el stream para
+trabajar con cualquier tipo de objetos
+
+ITERACIÓN EXTERNA vs. ITERACIÓN INTERNA
+----------------------------------------
+ITERACIÓN EXTERNA es la que hacemos con un for
+ITERACIÓN INTERNA es la que hacemos con el uso de streams
+con streams se hace un procesamiento secuencial, y con parallelStream se hace un procesamiento paralelo 
+multinúcleo.
+
+int suma = lista.stream().filter(n -> n%2 ==1).map(n-> n*n).reduce(0,Integer::sum);
+int suma = lista.parallelStream().filter(n -> n%2 ==1).map(n-> n*n).reduce(0,Integer::sum);
+
+PIPELINING - Relacionado con OPERACIONES INTERMEDIAS Y TERMINALES
+-----------------------------------------------------------------
+El PIPELINE de un STREAM es como su ciclo, tiene un inicio u origen de datos, operaciones intermedias que actúan sobre los datos del origen generando otros streasm, y una operación terminal.
+Las operaciones intermedias anuncian lo que hay que hacer en orden a los datos, pero no se ejecutan hasta que se llega a la operación final, esa operación es el punto donde se ejecutan en órden
+todo lo declarado en el pipeline en las operaciones intermedias y esta operación final produce un resultado final.
+
+
+Operaciones intermedias : ej
+-filter
+-map
+-distinct
+-limit
+-sorted
+
+Operaciones terminales: ej
+-forEach
+-count
+-average
+-max
+-min
+-reduce (reduce los elementos de una colección a un sólo elemento a partir de alguna función de acumulación) 
+-collect (crea una colección de elementos con los resultados obtenidos)
+-toArray
+-findFirst
+-findAny
+-anyMatch
+-allMatch
+
