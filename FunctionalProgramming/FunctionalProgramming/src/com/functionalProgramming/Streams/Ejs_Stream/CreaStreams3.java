@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 *
 */
 
-public class CrearStreams3 {
+public class CreaStreams3 {
     public static void main(String[] args) {
         //-TODO con arrays
         System.out.println("Stream de números creado desde un array de enteros");
