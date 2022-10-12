@@ -1,19 +1,18 @@
 package com.functionalProgramming.OperacionesReduccionMutable;
 
-import com.functionalProgramming.OperacionesIntermediasReduccion.Empleado;
-
+import com.functionalProgramming.OperacionesDeReduccionEnStreams.Empleado;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OperacionesReduccionMutable2 {
     public static void main(String[] args) {
-        // con toMap con 2 args tipo functions
+        // TODO Ejemplo con toMap con 2 args tipo functions
         Map<Integer, String> idNombreMapa =
                 Empleado.empleados().stream()
                 .collect(Collectors.toMap(Empleado::getId, Empleado::getNombre));
         System.out.println(idNombreMapa);
 
-        // con toMap con 3 args dos tipo function, y uno
+        // TODO Ejemplo con toMap con 3 args dos tipo function, y uno BinaryOperator
         System.out.println("\n");
         Map<Empleado.Genero, String> generoNombreMapa =
                 Empleado.empleados().stream()

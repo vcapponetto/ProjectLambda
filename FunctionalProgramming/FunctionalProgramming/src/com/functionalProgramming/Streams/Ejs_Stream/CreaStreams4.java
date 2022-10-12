@@ -11,17 +11,17 @@ import java.util.stream.Stream;
 * */
 public class CreaStreams4 {
     public static void main(String[] args) {
-        //todo para obtener el string por pantalla usamos el objeto scanner
+        //TODO para obtener el string por pantalla usamos el objeto scanner
         Scanner sc = new Scanner(System.in);
         String entrada = sc.nextLine();
 
         IntStream streamChars = entrada.chars();
-        //todo filtra del string recibido por pantalla sólo las letras, saca nros y espacios y muestra el string por pant
+        //TODO filtra del string recibido por pantalla sólo las letras, saca nros y espacios y muestra el string por pant
         streamChars.filter(n -> !Character.isDigit((char)n) && !Character.isWhitespace((char)n))
                    .forEach(n -> System.out.print((char)n));
         System.out.println("");
 
-        //todo ejemplo con pattern y el uso del método split que puede dividir un string en streams de strings
+        //TODO ejemplo con pattern y el uso del método split que puede dividir un string en streams de strings
         String str = "HTML, CSS, JAVASCRIPT, JAVA, C++, C#, RUBY";
         Pattern.compile(", ")
                 .splitAsStream(str)

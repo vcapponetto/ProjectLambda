@@ -6,19 +6,18 @@ package com.functionalProgramming.OperacionesReduccionMutable;
 * una list, una coleccion, un conjunto (set : lista sin datos repetidos) o un mapa, o incluso un stringBuilder
 * */
 
-import com.functionalProgramming.OperacionesIntermediasReduccion.Empleado;
-
+import com.functionalProgramming.OperacionesDeReduccionEnStreams.Empleado;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class OperacionesReduccionMutable1 {
     public static void main(String[] args) {
         /*
-        * Firmas del metodo collect
+        * TODO Firmas del metodo collect
         * 1 - <R> R collect (Supplier<R> supplier, BiConsumer<R, ? super T> accumulator,BiConsumer<R, R> combiner)
         * 2 - <R, A> R collect (Collector<? super T, A, R> collector)
         * */
-        /* EJEMPLO CON La primer firma :
+        /*TODO  EJEMPLO CON La primer firma :
         Supplier<ArrayList<String>> proveedor = () -> new ArrayList<>();
         // o con métodos referenciados : Supplier<ArrayList<String>> proveedor = ArrayList::new;
         BiConsumer<ArrayList<String>, String> acumulador = (lista, str) -> lista.add(str);
@@ -33,7 +32,7 @@ public class OperacionesReduccionMutable1 {
                                             .collect(ArrayList::new, ArrayList::add,ArrayList::addAll);
         */
 
-        //Ejemplo 1) - Collect
+        //TODO Ejemplo 1) - Collect
         List<String> nombres = Empleado.empleados()
                 .stream()
                 .map(Empleado::getNombre)
@@ -41,7 +40,7 @@ public class OperacionesReduccionMutable1 {
         System.out.println(nombres);
 
 
-        //Ejemplo 2) - Collector
+        //TODO Ejemplo 2) - Collector
         List<String> nombres1 = Empleado.empleados()
                 .stream()
                 .map(Empleado::getNombre)
@@ -54,7 +53,7 @@ public class OperacionesReduccionMutable1 {
                 .collect(Collectors.toSet());
         System.out.println("Nombres con Collector.toSet:" +nombres2);
 
-        //Lista ordenada
+        //TODO Lista ordenada con collectors
         SortedSet<String> nombres3 = Empleado.empleados()
                 .stream()
                 .map(Empleado::getNombre)

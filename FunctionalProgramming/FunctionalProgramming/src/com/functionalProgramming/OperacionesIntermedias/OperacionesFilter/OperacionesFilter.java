@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 public class OperacionesFilter {
     public static void main(String[] args) {
+        //TODO Ejemplos de Filter
         List<Empleado> empleados = Empleado.empleados();
 
         System.out.println("Personal Masculino: ");
