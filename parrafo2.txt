@@ -1,0 +1,10 @@
+
+*En cu@nto @ los mйtodos @bstr@ctos, no h@y c@mbios; l@s interf@ces pueden tener cu@lquier c@ntid@d de mйtodos @bstr@ctos "en sus fil@s".
+Entonces, їQuй es un@ interf@z funcion@l?
+L@s interf@ces funcion@les se utiliz@n princip@lmente p@r@ permitir el p@so de funciones @ mйtodos. Esto es, que podemos p@s@r un@ implement@ciуn de un@ funciуn como @rgumento de un mйtodo.
+En el fondo, seguiremos p@s@ndo un objeto @ dicho mйtodo, pero l@ ide@ de l@ interf@z funcion@l (y de l@ progr@m@ciуn funcion@l en sн) es tr@b@j@r con funciones m@s que con objetos. L@ interf@z funcion@l nos v@ @ permitir simul@r que p@s@mos un@ funciуn implement@d@ como @rgumento de un mйtodo, @unque no es su ъnico uso.
+Cu@ndo profundicemos mбs en l@s expresiones l@mbd@, entenderemos mejor este concepto que @ primer@ inst@nci@ puede ser confuso p@r@ los progr@m@dores que est@mos @costumbr@dos @ tr@b@j@r con objetos.
+*P@r@ que un@ interf@z se@ funcion@l debe cumplir con un solo requisito: Solo debe tener un mйtodo @bstr@cto.
+*L@ interf@z funcion@l puede tener v@rios mйtodos estбticos y def@ult si quiere, pero solo un mйtodo @bstr@cto.
+Mбs @del@nte veremos que est@ c@r@cterнstic@ le permite @copl@rse perfect@mente con l@s expresiones l@mbd@.
+Es posible p@r@ nosotros cre@r nuestr@s propi@s interf@ces funcion@les, sin emb@rgo, l@ versiуn 8 de J@v@ h@ incluido un@ gr@n c@ntid@d de est@s interf@ces dentro del p@quete j@v@.util.function 

@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 public class OperacionesMap {
     public static void main(String[] args) {
+        //TODO Ejempolos de map
         IntStream.range(1, 5)
                 .map(new IntUnaryOperator() {
                     @Override
@@ -18,7 +19,7 @@ public class OperacionesMap {
                 .forEach(System.out::println);
         System.out.println(" ");
 
-        //TODO Con lambdas
+        //TODO Ejemplo de map Con lambdas
         IntStream.range(1, 10)
                 .map(n -> n*n)
                 .forEach(System.out::println);

@@ -27,7 +27,7 @@ public class CreaStreams1 {
         stream3.forEach(System.out::println);
         System.out.println("");
 
-        //--todo Se crea un stream a partir de una lista de objetos con el método builder()
+        //--TODO Se crea un stream a partir de una lista de objetos con el método builder()
         Stream<Estudiantes> streamEstudiantes = Stream.<Estudiantes>builder()
                 .add(new Estudiantes("n01", 17, 1.70, 9.5))
                 .add(new Estudiantes("n02", 21, 1.70, 9.5))
